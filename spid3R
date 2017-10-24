@@ -23,6 +23,14 @@
 # GREP HELP
 # -P: Interpret PATTERN as a Perl regular expression since \w included in the pattern
 # -o: only extract the pattern that match the Perl regex
+#
+# THEORIE:
+# 1.Phase = Alle links mit entsprechendem suchmuster der Kategorie speichern.
+# 2.Phase = Alle links untersuchen und *.torrent datei speichern.
+# 3.Phase = *.torrent datein auf Server spielen wo sie weiter verarbeitet werden.
+#
+# VERSUCH:
+# curl -s https://rarbg.to/s/"1BY+DAY"%2B"1080"/ | grep href=\" | grep "torrent" | grep -o "href=\"\/\(torrent\)" - fail regex
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -52,6 +60,9 @@ INSTALL_DIR=/usr/share/spid3R
 
 # torrent Destination
 TORRENT=/$home/spid3R/
+
+# Base Url
+BASEURL="https://rarbg.to/"
 
 # Tools install
 #if ! hash searchsploit 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes searchsploit ; fi
