@@ -14,9 +14,15 @@
 # TODO
 # Search Torrent LIKE 'Nubiles.XXX'
 # https://rarbg.to/s/XXX/
+# CURL HELP....
 # curl -s | grep 1080p > links_1080p
-#
-
+# curl -sL xcoorp.com | grep -oP "http:\/\/(\w.*?)\/"
+# https://rarbg.to/torrents.php?search=%221BY-DAY%22%2B%221080%22
+# https://rarbg.to/s/%221BY+DAY%22%2B%221080%22/
+# https://rarbg.to/s/"1BY+DAY"%2B"1080"/
+# GREP HELP
+# -P: Interpret PATTERN as a Perl regular expression since \w included in the pattern
+# -o: only extract the pattern that match the Perl regex
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -104,7 +110,51 @@ cd
 exit
 fi
 
-#START MAINSTAGE
+# ---------------
+# SCRIPT FUNCTION
+# ---------------
+
+sh_stage1 () {
+echo -e "Controller Status und Config\n"
+$corecmd -AdpAllInfo -aAll
+}
+
+
+sh_stage2 () {
+echo -e "Ausgabe der Festplatteninformationen\n"
+$corecmd -LDInfo -L0 -a0
+}
+
+
+# -------------------------
+# FUNTION TO EXIT FRAMEWORK
+# -------------------------
+sh_exit () {
+echo ${BlueF}[*]${white} Exit megaR4id framework...${Reset};
+sleep 1
+exit
+}
+
+
+
+
+# ---------------
+# START MAINSTAGE
+# ---------------
+
+sh_main () {
+echo "nothing" > /dev/null 2>&1
+}
+
+
+# -----------------------------
+# MAIN MENU SHELLCODE GENERATOR
+# -----------------------------
+# Loop forever
+
+while :
+do
+
 clear
 echo -e '\n'
 echo -e "${red}"
@@ -118,3 +168,69 @@ echo -e "${clear}"
 echo -e "\n${orange} + -- --=[https://3xpl0it.com${clear} ${red}Version ${version}${clear}"
 sleep 1
 echo -e "\n"
+
+
+cat <<EOF
+
+megaR4id
+
+EOF
+
+echo -e "Latest Release: ${LATEST_VERSION}"
+
+echo -e "\n"
+
+cat << !
+
+    _____________________________________________________________________
+    | OPTION |                  DESCRIPTION(filters)                    |
+    ---------------------------------------------------------------------
+    |   1    -  1080p full                                              |
+    |   2    -  1By-Day                                                 |
+    |   3    -  ATK Galleria                                            |
+    |   4    -  Baby Got Boobs                                          |
+    |   5    -  Redirect browser traffic        -  to google sphere     |
+    |   6    -  Sniff browser traffic (http)    -  visited url's        |
+    |   7    -  Sniff browser traffic (http)    -  capture pictures     |
+    |   8    -  Sniff chat messages   (live)    -  AOL,IRC,YAHOO,MSN    |
+    |   9    -  Inject backdoor into (</body>)  -  exe,bat,jar,ps1,dll  |
+    |  10    -  Firefox browser heap-spray      -  buffer overflow      |
+    |  11    -  Android browser heap-spray      -  buffer overflow      |
+    |  12    -  Tor-browser heap-spray(windows) -  buffer overflow      |
+    |  13    -  Clone website + keylooger       -  javascritp_keylooger |
+    |  14    -  Modem/router login webpage      -  javascritp_keylooger |
+    |  15    -  Replace website images          -  img src=http://other |
+    |  16    -  Replace website text            -  replace: worlds      |
+    |                                                                   |
+    |   E    -  Exit/close megaR4id                                     |
+    ---------------------------------------------------------------------
+!
+
+sleep 1
+#echo -e ${white} Chose Your Option${RedF}: ${Reset};
+#echo -n "$PrompT"
+#read choice
+
+read -p " Chose Your Option:" choice
+	case $choice in
+		1) sh_stage1 ;;
+		2) sh_stage2 ;;
+		3) sh_stage3 ;;
+		4) sh_stage4 ;;
+		5) sh_stage5 ;;
+		6) sh_stage6 ;;
+		7) sh_stage7 ;;
+		8) sh_stage8 ;;
+		9) sh_stage9 ;;
+		10) sh_stage10 ;;
+		11) sh_stage11 ;;
+		12) sh_stage12 ;;
+		13) sh_stage13 ;;
+		14) sh_stage14 ;;
+		15) sh_stage15 ;;
+		16) sh_stage16 ;;
+		e) sh_exit ;;
+		E) sh_exit ;;
+		*) echo "\"$choice\": is not a valid Option"; sleep 1 ;;
+	esac
+done
