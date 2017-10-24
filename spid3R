@@ -2,25 +2,19 @@
 
 ######################################################################
 # spid3R
-# search and copy Exploit from exploit-db 2 metasploit-framework
-# Needs searchsploit amd metasploit-framework installed
-# script install this tools for you
-# First run from github directory ./spid3R ... after install
 # use command spid3R system wide
 # command: > spid3R $searchsting1 $searchstring2 $searchstring3
 ######################################################################
 
 ######################################################################
-# create 16.09.2017
-# last modify: 21.09.2017
+# create 24.10.2017
+# last modify: 24.10.2017
 # bug or anything: d43M0n23@3xpl0it.com
 ######################################################################
 
 ######################################################################
-
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
-red='\e[31m'			#Schriftfarbe rot
 bold='\033[1m'			#Fettschrift
 underline='\033[4m'		#Unterstreichen
 blinken='\033[5m'		#Blinken
@@ -44,12 +38,6 @@ vdate=16.09.2017
 
 # Local Destination
 INSTALL_DIR=/usr/share/spid3R
-
-# Exploit-db dir
-SOURCE_PATH=/usr/share/exploitdb/platforms
-
-# MSF4 - Metasploit user dir
-MSF_PATH=$HOME/.msf4/modules/exploits
 
 
 # Tools install
@@ -113,7 +101,7 @@ fi
 #START MAINSTAGE
 clear
 echo -e '\n'
-echo -e '${farbe}'
+echo -e '${red}'
 echo -e '                .__     .___________  __________ '
 echo -e '  ____________  |__|  __| _/\_____  \ \______   \'
 echo -e ' /  ___/\____ \ |  | / __ |   _(__  <  |       _/'
