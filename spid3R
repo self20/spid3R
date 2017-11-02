@@ -23,14 +23,16 @@
 # GREP HELP
 # -P: Interpret PATTERN as a Perl regular expression since \w included in the pattern
 # -o: only extract the pattern that match the Perl regex
-#
+# -A "Googlebot/2.1 (+http://www.google.com/bot.html)"
 # THEORIE:
 # 1.Phase = Alle links mit entsprechendem suchmuster der Kategorie speichern.
 # 2.Phase = Alle links untersuchen und *.torrent datei speichern.
 # 3.Phase = *.torrent datein auf Server spielen wo sie weiter verarbeitet werden.
 #
 # VERSUCH:
-# curl -s https://rarbg.to/s/"1BY+DAY"%2B"1080"/ | grep href=\" | grep "torrent" | grep -o "href=\"\/\(torrent\)" - fail regex
+# curl -s -A $BOT https://rarbg.to/s/"1BY+DAY"%2B"1080"/ | grep href=\" | grep "torrent" | grep -o "href=\"\/\(torrent\)" - fail regex
+# INSTALL -> https://github.com/banteg/rarbg & run
+# WORKS curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -63,6 +65,9 @@ TORRENT=/$home/spid3R/
 
 # Base Url
 BASEURL="https://rarbg.to/"
+
+# Agent Curl
+BOT="Googlebot/2.1 (+http://www.google.com/bot.html)"
 
 # Tools install
 #if ! hash searchsploit 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes searchsploit ; fi
@@ -125,21 +130,48 @@ fi
 # SCRIPT FUNCTION
 # ---------------
 
+#1.1080p full
 sh_stage1 () {
-echo -e "Controller Status und Config\n"
-$corecmd -AdpAllInfo -aAll
+echo -e "suche in '1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4"
 }
 
-
+#2.1By-Day
 sh_stage2 () {
-echo -e "Ausgabe der Festplatteninformationen\n"
-$corecmd -LDInfo -L0 -a0
+echo -e "suche in '1By-Day - 1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
+#3.ATK.Galleria
+sh_stage3 () {
+echo -e "suche in 'ATK.Galleria - 1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
+}
+
+#4.ATK.Exotics
+sh_stage4 () {
+echo -e "suche in '1By-Day - 1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
+}
+
+#5.ATK.Hairy
+sh_stage5 () {
+echo -e "suche in '1By-Day - 1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
+}
+
+#6.Baby.Got.Boobs
+sh_stage6 () {
+echo -e "suche in 'Baby.Got.Boobs - 1080p'"
+}
+
+
+#7.
 
 # -------------------------
 # FUNTION TO EXIT FRAMEWORK
 # -------------------------
+
 sh_exit () {
 echo ${BlueF}[*]${white} Exit megaR4id framework...${Reset};
 sleep 1
@@ -182,15 +214,11 @@ echo -e "\n"
 
 
 cat <<EOF
-
-megaR4id
+rarbg - XXX tracker by d43M0n23
 
 EOF
-
 echo -e "Latest Release: ${LATEST_VERSION}"
-
 echo -e "\n"
-
 cat << !
 
     _____________________________________________________________________
@@ -199,7 +227,9 @@ cat << !
     |   1    -  1080p full                                              |
     |   2    -  1By-Day                                                 |
     |   3    -  ATK Galleria                                            |
-    |   4    -  Baby Got Boobs                                          |
+    |   4    -  ATK Exotics
+    |   5    -  ATK Hairy
+    |   6    -  Baby Got Boobs                                          |
     |   5    -  Redirect browser traffic        -  to google sphere     |
     |   6    -  Sniff browser traffic (http)    -  visited url's        |
     |   7    -  Sniff browser traffic (http)    -  capture pictures     |
