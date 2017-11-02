@@ -133,7 +133,7 @@ fi
 #1.1080p full
 sh_stage1 () {
 echo -e "suche in '1080p'"
-curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | grep 'title|url'
 }
 
 #2.1By-Day
@@ -163,10 +163,36 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221
 #6.Baby.Got.Boobs
 sh_stage6 () {
 echo -e "suche in 'Baby.Got.Boobs - 1080p'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B+%221080%22&category=4" | egrep 'title|url'
 }
-
+#country=$(whois $core  | grep country | cut -d":" -f2)
 
 #7.
+
+#for file in *;
+#do
+#  find "$file" -type f -not -name ".*" | grep .mp4$ | while read file
+#  do
+#    pfad=$(readlink -f "$file") # kpl. Pfad
+#	DirPath=$pfad
+#	DirPath="$(dirname $DirPath)"
+#	DirPath="$(basename $DirPath)"
+#	echo "$DirPath"
+#	newtag=${DirPath%.XXX*}
+#	newfile=${file%.*}
+#	ffmpeg -i $file -c copy -metadata title="$newtag" -metadata comment="$newtag" -y ${newfile}_${owntag}.${mp4tag}
+#	echo $file korrigiert.
+#	cp $file ${file}.bka # Absicherung
+#	rm $file
+#  done
+#  find "$file" -type f -not -name ".*" | grep .mp4$ | while read file
+#  do
+#        newfile=${file%_core.*}
+#        mv $file ${newfile}.${mp4tag}
+#        echo $file verschoben.
+#   done
+#done
+
 
 # -------------------------
 # FUNTION TO EXIT FRAMEWORK
