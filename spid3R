@@ -142,19 +142,19 @@ echo -e "suche in '1By-Day - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
-#3.ATK.Galleria
+#3.ATKGalleria
 sh_stage3 () {
 echo -e "suche in 'ATK.Galleria - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
-#4.ATK.Exotics
+#4.ATKExotics
 sh_stage4 () {
 echo -e "suche in '1By-Day - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
-#5.ATK.Hairy
+#5.ATKHairy
 sh_stage5 () {
 echo -e "suche in '1By-Day - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
@@ -169,7 +169,47 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B
 
 #7.BigTitsAtWork
 #8.BigTitsAtSchool
-#9.
+#9.BoldlyGirls
+#10.BumsBesuch
+#11.BumsBuero
+#12.BurningAngel
+#13.CherryPimps
+#DDFBusty
+#DeviantHardcore
+#DigitalPlayground
+#DorcelClub
+#FootFetishDaily
+#GirlsDoToys
+#GirlsWay
+#HarmonyVision
+#HotAndMean
+#HotLegsAndFeet
+#HouseOfTaboo
+#InTheCrack
+#Killergram
+#MilfsLikeItBig
+#MomKnowsBest
+#MommyGotBoobs
+#MommysGirl
+#Pantyhosed4U
+#PornMegaLoad
+#PornstarPlatinum
+#PornStarsLikeItBig
+#PureMature
+#RKPrime
+#Roxi Keogh
+#ShareMyBF
+#TeensLoveHugeCocks
+#TeensLikeItBig
+#TheRealWorkout
+#TheLifeErotic
+#Vicki Valkyrie
+#VIPArea
+#WakeUpNFuck
+#WeFuckBlackGirls
+#WildOnCam
+
+
 
 #for file in *;
 #do
