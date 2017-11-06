@@ -142,7 +142,13 @@ fi
 #1.1080p full
 sh_stage1 () {
 echo -e "suche in '1080p'"
-curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | grep 'title|url'
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | egrep 'title|url' > 1080p.txt
+grep title 1080p.txt | while read -r line ; do
+    echo "Processing $line"
+    # your code goes here
+	sed -i "s/title/fuck/g" 1080p.txt
+	cp 1080p.txt 1080p.php
+done
 }
 
 #2.1By-Day
