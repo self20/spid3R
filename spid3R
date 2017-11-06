@@ -144,28 +144,33 @@ fi
 sh_stage1 () {
 echo -e "suche in '1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | egrep 'title|url' > 1080p.txt
-grep title 1080p.txt | while read -r line ; do
+cat 1080p.txt | while read -r line ; do
     echo "Processing $line"
     # your code goes here
-	sed -i "s/title/fuck/g" 1080p.txt
-	cp 1080p.txt 1080p.php
+title=$(grep title)
+title=${title/<title>/}
+title=${title/%</title>/}
+#	sed -i "s/title/fuck/g" 1080p.txt
+#	cp 1080p.txt 1080p.php
 	TABLE="1080p"
 #	core=${ip/ip=[::ffff:/}
 #	core=${core/%]/}
 #	echo $core > ${roaduser}_last.ip.txt
 #	oldip=$(cat ${roaduser}_last.ip.txt)
-
+echo -e "$title\n"
+#link=$()
+#add_date=$DATE
 ## MYSQL INSERT
-mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
-INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
-EOF
+#mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
+#INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
+#EOF
 ## MYSQL ENDE
 done
 }
 
 #2.1By-Day
 sh_stage2 () {
-echo -e "suche in '1By-Day - 1080p'"
+echo -e "suche in '1By.Day - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
@@ -177,13 +182,13 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221
 
 #4.ATKExotics
 sh_stage4 () {
-echo -e "suche in '1By-Day - 1080p'"
+echo -e "suche in 'ATK.Exotics - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
 #5.ATKHairy
 sh_stage5 () {
-echo -e "suche in '1By-Day - 1080p'"
+echo -e "suche in 'ATK.Hairy - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 }
 
