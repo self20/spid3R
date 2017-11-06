@@ -33,6 +33,7 @@
 # curl -s -A $BOT https://rarbg.to/s/"1BY+DAY"%2B"1080"/ | grep href=\" | grep "torrent" | grep -o "href=\"\/\(torrent\)" - fail regex
 # INSTALL -> https://github.com/banteg/rarbg & run
 # WORKS curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
+# while read line: https://stackoverflow.com/questions/16317961/how-to-process-each-line-received-as-a-result-of-grep-command
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -144,12 +145,12 @@ fi
 sh_stage1 () {
 echo -e "suche in '1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | egrep 'title|url' > 1080p.txt
-cat 1080p.txt | while read -r line ; do
-    echo "Processing $line"
+#grep title 1080p.txt | while read -r line ; do
+ #   echo "Processing $line"
     # your code goes here
-title=$(grep title)
-title=${title/<title>/}
-title=${title/%</title>/}
+#	title=$(grep title)
+#title=${title/<title>/}
+#title=${title/%</title>/}
 #	sed -i "s/title/fuck/g" 1080p.txt
 #	cp 1080p.txt 1080p.php
 	TABLE="1080p"
@@ -157,15 +158,30 @@ title=${title/%</title>/}
 #	core=${core/%]/}
 #	echo $core > ${roaduser}_last.ip.txt
 #	oldip=$(cat ${roaduser}_last.ip.txt)
-echo -e "$title\n"
+#echo -e "$title\n"
 #link=$()
 #add_date=$DATE
+
 ## MYSQL INSERT
 #mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
 #INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
 #EOF
 ## MYSQL ENDE
 done
+
+#while read -r line ; do
+#    echo "Processing $line"
+    # your code goes here
+#done < <(grep xyz abc.txt)
+
+while read -r line ; do
+    echo "Processing $line"
+    # your code goes here
+    	title=$(grep title)
+	title=${title/<title>/}
+	title=${title/%</title>/}
+	echo -e "$title\n"
+done < <(grep title 1080p.txt)
 }
 
 #2.1By-Day
@@ -273,7 +289,7 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B
 # -------------------------
 
 sh_exit () {
-echo ${BlueF}[*]${white} Exit megaR4id framework...${Reset};
+echo ${blue}[*]${white} Exit megaR4id framework...${clear};
 sleep 1
 exit
 }
