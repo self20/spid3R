@@ -57,6 +57,11 @@ DATE=$(date +%F)
 version=v1.0
 vdate=24.10.2017
 
+# Database Backup User
+DATABASE_USER='d43M0n23'
+DATABASE_PASSWORD=''
+DATABASE_HOST='localhost'
+
 # Local Destination
 INSTALL_DIR=/usr/share/spid3R
 
@@ -72,6 +77,10 @@ BOT="Googlebot/2.1 (+http://www.google.com/bot.html)"
 # Tools install
 #if ! hash searchsploit 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes searchsploit ; fi
 #if ! hash msfconsole 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes metasploit-framework ; fi
+
+
+
+
 
 #INSTALL
 if [ ! -d $INSTALL_DIR ]; then
