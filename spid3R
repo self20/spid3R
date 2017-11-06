@@ -167,7 +167,7 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4"
 #INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
 #EOF
 ## MYSQL ENDE
-done
+#done
 
 #while read -r line ; do
 #    echo "Processing $line"
