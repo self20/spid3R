@@ -177,11 +177,14 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4"
 while read -r line ; do
     echo "Processing $line"
     # your code goes here
-    	title=$(grep title)
+#    	title=$(grep title)
+	title=$line
 	title=${title/<title>/}
 	title=${title/%</title>/}
-	echo -e "$title\n"
+	echo -e "${title}\n" >> title.txt
+	echo -e "${title}\n"
 done < <(grep title 1080p.txt)
+sleep 3
 }
 
 #2.1By-Day
@@ -289,7 +292,7 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B
 # -------------------------
 
 sh_exit () {
-echo ${blue}[*]${white} Exit megaR4id framework...${clear};
+echo -e "${blue}[*]${white} Exit spiD3R torrent framework...${clear}";
 sleep 1
 exit
 }
