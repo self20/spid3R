@@ -58,10 +58,10 @@ version=v1.0
 vdate=24.10.2017
 
 # Database Backup User
-DATABASE_USER='d43M0n23'
-DATABASE_PASSWORD=''
-DATABASE_HOST='localhost'
-DATABASE_DB=''
+DB_USER='d43M0n23'
+DB_PASSWD=''
+DB_HOST='3xpl0it.com'
+DB_NAME='d43M0n23'
 
 # Local Destination
 INSTALL_DIR=/usr/share/spid3R
@@ -154,13 +154,12 @@ grep title 1080p.txt | while read -r line ; do
 #	core=${core/%]/}
 #	echo $core > ${roaduser}_last.ip.txt
 #	oldip=$(cat ${roaduser}_last.ip.txt)
-# mysqldump -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD --databases $DATABASE > ${bk4dir}_${DATE}.sql
-##
 
-#mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME << EOF
-#INSERT INTO $TABLE (id, day, time, rank) VALUES (NULL, "$day", "$time", "$rank");
-#EOF
-
+## MYSQL INSERT
+mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
+INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
+EOF
+## MYSQL ENDE
 done
 }
 
