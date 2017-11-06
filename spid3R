@@ -61,6 +61,7 @@ vdate=24.10.2017
 DATABASE_USER='d43M0n23'
 DATABASE_PASSWORD=''
 DATABASE_HOST='localhost'
+DATABASE_DB=''
 
 # Local Destination
 INSTALL_DIR=/usr/share/spid3R
@@ -148,6 +149,18 @@ grep title 1080p.txt | while read -r line ; do
     # your code goes here
 	sed -i "s/title/fuck/g" 1080p.txt
 	cp 1080p.txt 1080p.php
+	TABLE="1080p"
+#	core=${ip/ip=[::ffff:/}
+#	core=${core/%]/}
+#	echo $core > ${roaduser}_last.ip.txt
+#	oldip=$(cat ${roaduser}_last.ip.txt)
+# mysqldump -h $DATABASE_HOST -u $DATABASE_USER -p$DATABASE_PASSWORD --databases $DATABASE > ${bk4dir}_${DATE}.sql
+##
+
+#mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME << EOF
+#INSERT INTO $TABLE (id, day, time, rank) VALUES (NULL, "$day", "$time", "$rank");
+#EOF
+
 done
 }
 
