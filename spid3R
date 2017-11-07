@@ -3,12 +3,12 @@
 ######################################################################
 # spid3R
 # use command spid3R system wide
-# command: > spid3R $searchsting1 $searchstring2 $searchstring3
+# command: > spid3R $FUNKTION
 ######################################################################
 
 ######################################################################
 # create 24.10.2017
-# last modify: 24.10.2017
+# last modify: 07.11.2017
 # bug or anything: d43M0n23@3xpl0it.com
 ######################################################################
 # TODO
@@ -34,6 +34,7 @@
 # INSTALL -> https://github.com/banteg/rarbg & run
 # WORKS curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 # while read line: https://stackoverflow.com/questions/16317961/how-to-process-each-line-received-as-a-result-of-grep-command
+# sed -i "s/title/fuck/g" 1080p.txt
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -52,11 +53,15 @@ white='\033[37m'		#Schriftfarbe weiß
 orange='\033[93m'		#Schriftfarbe orange
 ######################################################################
 
+#############
+# Config Part
+#############
 
 ##Variablen
 DATE=$(date +%F)
 version=v1.0
 vdate=24.10.2017
+add_date=$DATE
 
 # Database Backup User
 DB_USER='d43M0n23'
@@ -68,28 +73,49 @@ DB_NAME='d43M0n23'
 INSTALL_DIR=/usr/share/spid3R
 
 # torrent Destination
-# 2 save output
-TORRENT=/$home/spid3R/
+# 2 save output #$PWD
+TORRENT=/home/spid3R/
+if [ ! -d $TORRENT ];then mkdir -p $TORRENT;fi
+#cd $TORRENT;
 
-if [ ! -d $TORRENT ];then
- mkdir $TORRENT;
-fi
+# Email
+email=d43M0n23@3xpl0it.com
 
+# DELETE OLD LOGS?
+# 1=yes/0=no
+kill_logs=0
+if [ $kill_logs = 1 ]; then rm $TORRENT/*.txt; fi
+
+#WORKING DIR
+TOPDIR=`pwd`
+
+###############
+# RARRSS FILTER
+# category filter by category, specify multiple categories like this: 44;45
+# limit number of results: 25, 50 or 100 (default: 25)
+limit=50
+
+#############
 # Menu Insert
-Xinsert_18="Spandex"
+source menu.cfg
+#Xinsert_18="Spandex"
 
+#############
+# Curl
 # Base Url
 BASEURL="https://rarbg.to/"
 
 # Agent Curl
 BOT="Googlebot/2.1 (+http://www.google.com/bot.html)"
 
+###############
 # Tools install
 #if ! hash searchsploit 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes searchsploit ; fi
 #if ! hash msfconsole 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes metasploit-framework ; fi
 
-
-#INSTALL
+################
+# INSTALL spiD3R
+################
 if [ ! -d $INSTALL_DIR ]; then
 echo -e "\n${green} + -- --=[This is your first run of the spid3R script${clear}"
 echo -e "${green} + -- --=[This script will install spid3R under $INSTALL_DIR.${clear}"
@@ -104,6 +130,7 @@ echo -e "${green} + -- --=[Installation Finish.${clear}"
 sleep 2
 fi
 
+#################
 ### FUNCTIONS ###
 #Latest release
 LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/d43M0n23/spid3R/releases/latest)
@@ -146,33 +173,28 @@ fi
 # SCRIPT FUNCTION
 # ---------------
 
+# -------------------------------------------
+# send email with report from single scann
+# -------------------------------------------
+sh_mail () {
+mail -s "sc4nn3r: ${scanner}" $email < $scanlog -aFrom:sc4nn3r@3xpl0it.com
+}
+
+# -------------------------------------------
+# insert mysql statement in DB
+# -------------------------------------------
+sh_mysql () {
+mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
+INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
+EOF
+}
+
 #1.1080p full
 sh_stage1 () {
-echo -e "suche in '1080p'"
-curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4" | egrep 'title|url' > 1080p.txt
-#grep title 1080p.txt | while read -r line ; do
- #   echo "Processing $line"
-    # your code goes here
-#	title=$(grep title)
-#title=${title/<title>/}
-#title=${title/%</title>/}
-#	sed -i "s/title/fuck/g" 1080p.txt
-#	cp 1080p.txt 1080p.php
-	TABLE="1080p"
-#	core=${ip/ip=[::ffff:/}
-#	core=${core/%]/}
-#	echo $core > ${roaduser}_last.ip.txt
-#	oldip=$(cat ${roaduser}_last.ip.txt)
-#echo -e "$title\n"
-#link=$()
-#add_date=$DATE
-
-## MYSQL INSERT
-#mysql --host=$DB_HOST --user=$DB_USER --password=$DB_PASSWD --databases $DB_NAME << EOF
-#INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", "$add_date");
-#EOF
-## MYSQL ENDE
-#done
+spider="1080p"
+echo -e "suche in '${spider}'"
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080p%22&category=4&limit=50" | egrep 'title|url' > $TORRENT/$spider.txt
+TABLE=$spider
 
 #while read -r line ; do
 #    echo "Processing $line"
@@ -180,15 +202,16 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080%22&category=4"
 #done < <(grep xyz abc.txt)
 
 while read -r line ; do
-    echo "Processing $line"
-    # your code goes here
-#    	title=$(grep title)
-	title=$line
+    	title=$(line | grep title)
+#	title=$line
 	tmp_title=${title/<title>/}
 	new_title=${tmp_title/%<*/}
-	echo $new_title >> title.txt
+	echo $new_title >> $TORRENT/${spider}_title.txt
+	#Entfernen der Zeile rarbgP
+	sed -i '/^rar*/ d' $TORRENT/${spider}_title.txt
 	echo $new_title
-done < <(grep title 1080p.txt)
+done < <(cat $TORRENT/$spider.txt)
+#done < <(grep title $TORRENT/$spider.txt)
 sleep 3
 }
 
@@ -222,47 +245,6 @@ echo -e "suche in 'Baby.Got.Boobs - 1080p'"
 curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B+%221080%22&category=4" | egrep 'title|url'
 }
 #country=$(whois $core  | grep country | cut -d":" -f2)
-
-#7.BigTitsAtWork
-#8.BigTitsAtSchool
-#9.BoldlyGirls
-#10.BumsBesuch
-#11.BumsBuero
-#12.BurningAngel
-#13.CherryPimps
-#DDFBusty
-#DeviantHardcore
-#DigitalPlayground
-#DorcelClub
-#FootFetishDaily
-#GirlsDoToys
-#GirlsWay
-#HarmonyVision
-#HotAndMean
-#HotLegsAndFeet
-#HouseOfTaboo
-#InTheCrack
-#Killergram
-#MilfsLikeItBig
-#MomKnowsBest
-#MommyGotBoobs
-#MommysGirl
-#Pantyhosed4U
-#PornMegaLoad
-#PornstarPlatinum
-#PornStarsLikeItBig
-#PureMature
-#RKPrime
-#ShareMyBF
-#TeensLoveHugeCocks
-#TeensLikeItBig
-#TheRealWorkout
-#TheLifeErotic
-#VIPArea
-#WakeUpNFuck
-#WeFuckBlackGirls
-#WildOnCam
-
 
 
 #for file in *;
@@ -333,10 +315,8 @@ echo -e "${clear}"
 echo -e "\n${orange} + -- --=[https://3xpl0it.com${clear} ${red}Version ${version}${clear}"
 sleep 1
 echo -e "\n"
-
-
 cat <<EOF
-rarbg - XXX tracker by d43M0n23
+${orange} + -- --=[rarbg.to - XXX-Torrent tracker by d43M0n23${clear}
 
 EOF
 #echo -e "Latest Release: ${LATEST_VERSION}"
@@ -346,33 +326,33 @@ cat << !
     _____________________________________________________________________
     | OPTION |                  DESCRIPTION(filters)                    |
     ---------------------------------------------------------------------
-    |   1    -  1080p full           |  28    -  1080p full             |
-    |   2    -  1By.Day              |  29    -  1080p full             |
-    |   3    -  ATKGalleria          |  30    -  1080p full             |
-    |   4    -  ATKExotics           |  31    -  1080p full             |
-    |   5    -  ATKHairy             |  32    -  1080p full             |
-    |   6    -  BabyGotBoobs         |  33    -  1080p full             |
-    |   7    -  BigTitsAtWork        |  34     - Irgendwas              |
-    |   8    -  BigTitsAtSchool      |  35     - Irgendwas              |
-    |   9    -  BoldlyGirls          |  36     - Irgendwas              |
-    |  10    -  BumsBesuch           |  37     - Irgendwas              |
-    |  11    -  BurningAngel         |  38     - Irgendwas              |
-    |  12    -  CherryPimps          |  39     - Irgendwas              |
-    |  13    -  DDFBusty             |  40     - Irgendwas              |
-    |  14    -  DeviantHardcore      |  41     - Irgendwas              |
-    |  15    -  DigitalPlayground    |  42     - Irgendwas              |
-    |  16    -  FootFetishDaily      |  43     - Irgendwas              |
-    |  17    -  GirlsDoToys          |  44     - Irgendwas              |
-    |  18    -  ${Xinsert_18}        |  45     - Irgendwas              |
-    |  19    -  GirlsWay             |  46     - Irgendwas              |
-    |  20    -  GirlsWay             |  47     - Irgendwas              |
-    |  21    -  GirlsWay             |  48     - Irgendwas              |
-    |  22    -  GirlsWay             |  49     - Irgendwas              |
-    |  23    -  GirlsWay             |  50     - Irgendwas              |
-    |  24    -  GirlsWay             |  51     - Irgendwas              |
-    |  25    -  GirlsWay             |  52     - Irgendwas              |
-    |  26    -  GirlsWay             |  53     - Irgendwas              |
-    |  27    -  GirlsWay             |  54     - Irgendwas              |
+    |   1    -  ${Xinsert_01}        |  28    -  ${Xinsert_28}          |
+    |   2    -  ${Xinsert_02}        |  29    -  ${Xinsert_29}          |
+    |   3    -  ${Xinsert_03}        |  30    -  ${Xinsert_30}          |
+    |   4    -  ${Xinsert_04}        |  31    -  ${Xinsert_31}          |
+    |   5    -  ${Xinsert_05}        |  32    -  ${Xinsert_32}          |
+    |   6    -  ${Xinsert_06}        |  33    -  ${Xinsert_33}          |
+    |   7    -  ${Xinsert_07}        |  34     - ${Xinsert_34}          |
+    |   8    -  ${Xinsert_08}        |  35     - ${Xinsert_35}          |
+    |   9    -  ${Xinsert_09}        |  36     - ${Xinsert_36}          |
+    |  10    -  ${Xinsert_10}        |  37     - ${Xinsert_37}          |
+    |  11    -  ${Xinsert_11}        |  38     - ${Xinsert_38}          |
+    |  12    -  ${Xinsert_12}        |  39     - ${Xinsert_39}          |
+    |  13    -  ${Xinsert_13}        |  40     - ${Xinsert_40}          |
+    |  14    -  ${Xinsert_14}        |  41     - ${Xinsert_41}          |
+    |  15    -  ${Xinsert_15}        |  42     - ${Xinsert_42}          |
+    |  16    -  ${Xinsert_16}        |  43     - ${Xinsert_43}          |
+    |  17    -  ${Xinsert_17}        |  44     - ${Xinsert_44}          |
+    |  18    -  ${Xinsert_18}        |  45     - ${Xinsert_45}          |
+    |  19    -  ${Xinsert_19}        |  46     - ${Xinsert_46}          |
+    |  20    -  ${Xinsert_20}        |  47     - ${Xinsert_47}          |
+    |  21    -  ${Xinsert_21}        |  48     - ${Xinsert_48}          |
+    |  22    -  ${Xinsert_22}        |  49     - ${Xinsert_49}          |
+    |  23    -  ${Xinsert_23}        |  50     - ${Xinsert_50}          |
+    |  24    -  ${Xinsert_24}        |  51     - ${Xinsert_51}          |
+    |  25    -  ${Xinsert_25}        |  52     - ${Xinsert_52}          |
+    |  26    -  ${Xinsert_26}        |  53     - ${Xinsert_53}          |
+    |  27    -  ${Xinsert_27}        |  54     - ${Xinsert_54}          |
     |                                                                   |
     |   E    -  Exit/close spiD3R                                       |
     ---------------------------------------------------------------------
@@ -382,7 +362,7 @@ cat << !
 #echo -e ${white} Chose Your Option${RedF}: ${Reset};
 #echo -n "$PrompT"
 #read choice
-cd $TORRENT;
+#cd $TORRENT;
 read -p " Chose Your Option:" choice
 	case $choice in
 		1) sh_stage1 ;;
