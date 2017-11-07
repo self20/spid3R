@@ -35,6 +35,12 @@
 # WORKS curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221BY-DAY%22+%2B+%221080%22&category=4"
 # while read line: https://stackoverflow.com/questions/16317961/how-to-process-each-line-received-as-a-result-of-grep-command
 # sed -i "s/title/fuck/g" 1080p.txt
+#
+# WHILE READ -R 
+# while read -r line ; do
+#    echo "Processing $line"
+    # your code goes here
+#done < <(grep xyz abc.txt)
 ######################################################################
 # Bash sTyl3!
 clear='\033[0m'			#alle Attribute zurücksetzen
@@ -189,29 +195,35 @@ INSERT INTO $TABLE (id, title, link, add_date) VALUES (NULL, "$titel", "$link", 
 EOF
 }
 
-#1.1080p full
+# -------------------------------------------
+# search $string at rarbg.to
+# -------------------------------------------
+sh_torrent () {
+echo -e " ${turk}suche in '${spider}'${clear}";
+curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22"$spider"%22&category=4&limit=50" | egrep 'title|url' > $TORRENT/$spider.txt;
+TABLE=$spider;
+sed -i '/^<title>*/ d' $TORRENT/${spider}.txt
+}
+
+#1.1080p
 sh_stage1 () {
 spider="1080p"
-echo -e "suche in '${spider}'"
-curl -s "http://127.0.0.1:4444/?mode=search&search_string=%221080p%22&category=4&limit=50" | egrep 'title|url' > $TORRENT/$spider.txt
-TABLE=$spider
-
-#while read -r line ; do
-#    echo "Processing $line"
-    # your code goes here
-#done < <(grep xyz abc.txt)
+sh_torrent
 
 while read -r line ; do
-    	title=$(line | grep title)
-#	title=$line
+	title=$line
 	tmp_title=${title/<title>/}
-	new_title=${tmp_title/%<*/}
+	new_title=${tmp_title/%<*/|}
+#	link=$line
+#	tmp_link=${link/url=\"/}
+#        new_link=${tmp_link/%\"/}
 	echo $new_title >> $TORRENT/${spider}_title.txt
-	#Entfernen der Zeile rarbgP
+#	echo $new_link >> $TORRENT/${spider}_link.txt
+	#Entfernen der Zeile rarbg
 	sed -i '/^rar*/ d' $TORRENT/${spider}_title.txt
 	echo $new_title
-done < <(cat $TORRENT/$spider.txt)
-#done < <(grep title $TORRENT/$spider.txt)
+#done < <(cat $TORRENT/$spider.txt)
+done < <(grep title $TORRENT/$spider.txt)
 sleep 3
 }
 
@@ -284,7 +296,6 @@ exit
 
 
 
-
 # ---------------
 # START MAINSTAGE
 # ---------------
@@ -298,6 +309,8 @@ echo "nothing" > /dev/null 2>&1
 # MAIN MENU SHELLCODE GENERATOR
 # -----------------------------
 # Loop forever
+#8
+space="        "
 
 while :
 do
@@ -305,18 +318,18 @@ do
 clear
 echo -e '\n'
 echo -e "${red}"
-echo -e '                .__     .___________  __________ '
-echo -e '  ____________  |__|  __| _/\_____  \ \______   \'
-echo -e ' /  ___/\____ \ |  | / __ |   _(__  <  |       _/'
-echo -e ' \___ \ |  |_> >|  |/ /_/ |  /       \ |    |   \'
-echo -e '/____  >|   __/ |__|\____ | /______  / |____|_  /'
-echo -e '     \/ |__|             \/        \/         \/ '
+echo -e "${space}                .__     .___________  __________ "
+echo -e "${space}  ____________  |__|  __| _/\_____  \ \______   \"
+echo -e "${space} /  ___/\____ \ |  | / __ |   _(__  <  |       _/"
+echo -e "${space} \___ \ |  |_> >|  |/ /_/ |  /       \ |    |   \"
+echo -e "${space}/____  >|   __/ |__|\____ | /______  / |____|_  /"
+echo -e "${space}     \/ |__|             \/        \/         \/ "
 echo -e "${clear}"
-echo -e "\n${orange} + -- --=[https://3xpl0it.com${clear} ${red}Version ${version}${clear}"
+echo -e "\n${orange}${space} + -- --=[https://3xpl0it.com${clear} ${red}Version ${version}${clear}"
 sleep 1
-echo -e "\n"
+#echo -e "\n"
 cat <<EOF
-${orange} + -- --=[rarbg.to - XXX-Torrent tracker by d43M0n23${clear}
+         + -- --=[rarbg.to - XXX-Torrent tracker by d43M0n23
 
 EOF
 #echo -e "Latest Release: ${LATEST_VERSION}"
@@ -326,44 +339,40 @@ cat << !
     _____________________________________________________________________
     | OPTION |                  DESCRIPTION(filters)                    |
     ---------------------------------------------------------------------
-    |   1    -  ${Xinsert_01}        |  28    -  ${Xinsert_28}          |
-    |   2    -  ${Xinsert_02}        |  29    -  ${Xinsert_29}          |
-    |   3    -  ${Xinsert_03}        |  30    -  ${Xinsert_30}          |
-    |   4    -  ${Xinsert_04}        |  31    -  ${Xinsert_31}          |
-    |   5    -  ${Xinsert_05}        |  32    -  ${Xinsert_32}          |
-    |   6    -  ${Xinsert_06}        |  33    -  ${Xinsert_33}          |
-    |   7    -  ${Xinsert_07}        |  34     - ${Xinsert_34}          |
-    |   8    -  ${Xinsert_08}        |  35     - ${Xinsert_35}          |
-    |   9    -  ${Xinsert_09}        |  36     - ${Xinsert_36}          |
-    |  10    -  ${Xinsert_10}        |  37     - ${Xinsert_37}          |
-    |  11    -  ${Xinsert_11}        |  38     - ${Xinsert_38}          |
-    |  12    -  ${Xinsert_12}        |  39     - ${Xinsert_39}          |
-    |  13    -  ${Xinsert_13}        |  40     - ${Xinsert_40}          |
-    |  14    -  ${Xinsert_14}        |  41     - ${Xinsert_41}          |
-    |  15    -  ${Xinsert_15}        |  42     - ${Xinsert_42}          |
-    |  16    -  ${Xinsert_16}        |  43     - ${Xinsert_43}          |
-    |  17    -  ${Xinsert_17}        |  44     - ${Xinsert_44}          |
-    |  18    -  ${Xinsert_18}        |  45     - ${Xinsert_45}          |
-    |  19    -  ${Xinsert_19}        |  46     - ${Xinsert_46}          |
-    |  20    -  ${Xinsert_20}        |  47     - ${Xinsert_47}          |
-    |  21    -  ${Xinsert_21}        |  48     - ${Xinsert_48}          |
-    |  22    -  ${Xinsert_22}        |  49     - ${Xinsert_49}          |
+    |   1    -  ${Xinsert_01}                 |  28    -  ${Xinsert_28}            |
+    |   2    -  ${Xinsert_02}               |  29    -  ${Xinsert_29}          |
+    |   3    -  ${Xinsert_03}           |  30    -  ${Xinsert_30}          |
+    |   4    -  ${Xinsert_04}            |  31    -  ${Xinsert_31}          |
+    |   5    -  ${Xinsert_05}              |  32    -  ${Xinsert_32}          |
+    |   6    -  ${Xinsert_06}          |  33    -  ${Xinsert_33}          |
+    |   7    -  ${Xinsert_07}         |  34     - ${Xinsert_34}          |
+    |   8    -  ${Xinsert_08}       |  35     - ${Xinsert_35}          |
+    |   9    -  ${Xinsert_09}           |  36     - ${Xinsert_36}          |
+    |  10    -  ${Xinsert_10}            |  37     - ${Xinsert_37}          |
+    |  11    -  ${Xinsert_11}             |  38     - ${Xinsert_38}          |
+    |  12    -  ${Xinsert_12}          |  39     - ${Xinsert_39}          |
+    |  13    -  ${Xinsert_13}           |  40     - ${Xinsert_40}          |
+    |  14    -  ${Xinsert_14}              |  41     - ${Xinsert_41}          |
+    |  15    -  ${Xinsert_15}       |  42     - ${Xinsert_42}          |
+    |  16    -  ${Xinsert_16}     |  43     - ${Xinsert_43}          |
+    |  17    -  ${Xinsert_17}           |  44     - ${Xinsert_44}          |
+    |  18    -  ${Xinsert_18}       |  45     - ${Xinsert_45}          |
+    |  19    -  ${Xinsert_19}           |  46     - ${Xinsert_46}          |
+    |  20    -  ${Xinsert_20}              |  47     - ${Xinsert_47}          |
+    |  21    -  ${Xinsert_21}         |  48     - ${Xinsert_48}          |
+    |  22    -  ${Xinsert_22}            |  49     - ${Xinsert_49}          |
     |  23    -  ${Xinsert_23}        |  50     - ${Xinsert_50}          |
-    |  24    -  ${Xinsert_24}        |  51     - ${Xinsert_51}          |
-    |  25    -  ${Xinsert_25}        |  52     - ${Xinsert_52}          |
-    |  26    -  ${Xinsert_26}        |  53     - ${Xinsert_53}          |
-    |  27    -  ${Xinsert_27}        |  54     - ${Xinsert_54}          |
+    |  24    -  ${Xinsert_24}          |  51     - ${Xinsert_51}          |
+    |  25    -  ${Xinsert_25}            |  52     - ${Xinsert_52}          |
+    |  26    -  ${Xinsert_26}              |  53     - ${Xinsert_53}          |
+    |  27    -  ${Xinsert_27}              |  54     - ${Xinsert_54}          |
     |                                                                   |
     |   E    -  Exit/close spiD3R                                       |
     ---------------------------------------------------------------------
 !
 
 #sleep 1
-#echo -e ${white} Chose Your Option${RedF}: ${Reset};
-#echo -n "$PrompT"
-#read choice
-#cd $TORRENT;
-read -p " Chose Your Option:" choice
+read -p " Chose Your Option: " choice
 	case $choice in
 		1) sh_stage1 ;;
 		2) sh_stage2 ;;
