@@ -68,7 +68,12 @@ DB_NAME='d43M0n23'
 INSTALL_DIR=/usr/share/spid3R
 
 # torrent Destination
+# 2 save output
 TORRENT=/$home/spid3R/
+
+if [ ! -d $TORRENT ];then
+ mkdir $TORRENT;
+fi
 
 # Base Url
 BASEURL="https://rarbg.to/"
@@ -79,9 +84,6 @@ BOT="Googlebot/2.1 (+http://www.google.com/bot.html)"
 # Tools install
 #if ! hash searchsploit 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes searchsploit ; fi
 #if ! hash msfconsole 2>/dev/null; then sudo apt-get update && apt-get upgrade -y; sudo apt-get install --yes metasploit-framework ; fi
-
-
-
 
 
 #INSTALL
@@ -341,24 +343,33 @@ cat << !
     _____________________________________________________________________
     | OPTION |                  DESCRIPTION(filters)                    |
     ---------------------------------------------------------------------
-    |   1    -  1080p full                                              |
-    |   2    -  1By.Day                                                 |
-    |   3    -  ATKGalleria                                            |
-    |   4    -  ATKExotics
-    |   5    -  ATKHairy
-    |   6    -  BabyGotBoobs                                          |
-    |   7    -  BigTitsAtWork       -  to google sphere     |
-    |   8    -  Sniff browser traffic (http)    -  visited url's        |
-    |   9    -  Sniff browser traffic (http)    -  capture pictures     |
-    |  10    -  Sniff chat messages   (live)    -  AOL,IRC,YAHOO,MSN    |
-    |  11    -  Inject backdoor into (</body>)  -  exe,bat,jar,ps1,dll  |
-    |  10    -  Firefox browser heap-spray      -  buffer overflow      |
-    |  11    -  Android browser heap-spray      -  buffer overflow      |
-    |  12    -  Tor-browser heap-spray(windows) -  buffer overflow      |
-    |  13    -  Clone website + keylooger       -  javascritp_keylooger |
-    |  14    -  Modem/router login webpage      -  javascritp_keylooger |
-    |  15    -  Replace website images          -  img src=http://other |
-    |  16    -  Replace website text            -  replace: worlds      |
+    |   1    -  1080p full           |  26    -  1080p full              |
+    |   2    -  1By.Day              |  27    -  1080p full              |
+    |   3    -  ATKGalleria          |  28    -  1080p full              |
+    |   4    -  ATKExotics           |  29    -  1080p full              |
+    |   5    -  ATKHairy             |  30    -  1080p full              |
+    |   6    -  BabyGotBoobs         |  31    -  1080p full              |
+    |   7    -  BigTitsAtWork        |  32     - Irgendwas              |
+    |   8    -  BigTitsAtSchool      |  33     - Irgendwas              |
+    |   9    -  BoldlyGirls          |  34     - Irgendwas              |
+    |  10    -  BumsBesuch           |  35     - Irgendwas              |
+    |  11    -  BurningAngel         |  36     - Irgendwas              |
+    |  10    -  CherryPimps          |  37     - Irgendwas              |
+    |  11    -  DDFBusty             |  38     - Irgendwas              |
+    |  12    -  DeviantHardcore      |  39     - Irgendwas              |
+    |  13    -  DigitalPlayground    |  40     - Irgendwas              |
+    |  14    -  FootFetishDaily      |  41     - Irgendwas              |
+    |  15    -  GirlsDoToys          |  42     - Irgendwas              |
+    |  16    -  GirlsWay             |  43     - Irgendwas              |
+    |  17    -  GirlsWay             |  44     - Irgendwas              |
+    |  18    -  GirlsWay             |  45     - Irgendwas              |
+    |  19    -  GirlsWay             |  46     - Irgendwas              |
+    |  20    -  GirlsWay             |  47     - Irgendwas              |
+    |  21    -  GirlsWay             |  48     - Irgendwas              |
+    |  22    -  GirlsWay             |  49     - Irgendwas              |
+    |  23    -  GirlsWay             |  50     - Irgendwas              |
+    |  24    -  GirlsWay             |  12     - Irgendwas              |
+    |  25    -  GirlsWay             |  12     - Irgendwas              |
     |                                                                   |
     |   E    -  Exit/close spiD3R                                       |
     ---------------------------------------------------------------------
@@ -368,7 +379,7 @@ cat << !
 #echo -e ${white} Chose Your Option${RedF}: ${Reset};
 #echo -n "$PrompT"
 #read choice
-
+cd $TORRENT;
 read -p " Chose Your Option:" choice
 	case $choice in
 		1) sh_stage1 ;;
