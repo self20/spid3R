@@ -179,10 +179,10 @@ while read -r line ; do
     # your code goes here
 #    	title=$(grep title)
 	title=$line
-	title=${title/<title>/}
-	title=${title/%</title>/}
-	echo -e "${title}\n" >> title.txt
-	echo -e "${title}\n"
+	tmp_title=${title/<title>/}
+	new_title=${tmp_title/%<*/}
+	echo $new_title >> title.txt
+	echo $new_title
 done < <(grep title 1080p.txt)
 sleep 3
 }
@@ -248,13 +248,11 @@ curl -s "http://127.0.0.1:4444/?mode=search&search_string=%22BabyGotBoobs%22+%2B
 #PornStarsLikeItBig
 #PureMature
 #RKPrime
-#Roxi Keogh
 #ShareMyBF
 #TeensLoveHugeCocks
 #TeensLikeItBig
 #TheRealWorkout
 #TheLifeErotic
-#Vicki Valkyrie
 #VIPArea
 #WakeUpNFuck
 #WeFuckBlackGirls
@@ -336,24 +334,24 @@ cat <<EOF
 rarbg - XXX tracker by d43M0n23
 
 EOF
-echo -e "Latest Release: ${LATEST_VERSION}"
-echo -e "\n"
+#echo -e "Latest Release: ${LATEST_VERSION}"
+#echo -e "\n"
 cat << !
 
     _____________________________________________________________________
     | OPTION |                  DESCRIPTION(filters)                    |
     ---------------------------------------------------------------------
     |   1    -  1080p full                                              |
-    |   2    -  1By-Day                                                 |
-    |   3    -  ATK Galleria                                            |
-    |   4    -  ATK Exotics
-    |   5    -  ATK Hairy
-    |   6    -  Baby Got Boobs                                          |
-    |   5    -  Redirect browser traffic        -  to google sphere     |
-    |   6    -  Sniff browser traffic (http)    -  visited url's        |
-    |   7    -  Sniff browser traffic (http)    -  capture pictures     |
-    |   8    -  Sniff chat messages   (live)    -  AOL,IRC,YAHOO,MSN    |
-    |   9    -  Inject backdoor into (</body>)  -  exe,bat,jar,ps1,dll  |
+    |   2    -  1By.Day                                                 |
+    |   3    -  ATKGalleria                                            |
+    |   4    -  ATKExotics
+    |   5    -  ATKHairy
+    |   6    -  BabyGotBoobs                                          |
+    |   7    -  BigTitsAtWork       -  to google sphere     |
+    |   8    -  Sniff browser traffic (http)    -  visited url's        |
+    |   9    -  Sniff browser traffic (http)    -  capture pictures     |
+    |  10    -  Sniff chat messages   (live)    -  AOL,IRC,YAHOO,MSN    |
+    |  11    -  Inject backdoor into (</body>)  -  exe,bat,jar,ps1,dll  |
     |  10    -  Firefox browser heap-spray      -  buffer overflow      |
     |  11    -  Android browser heap-spray      -  buffer overflow      |
     |  12    -  Tor-browser heap-spray(windows) -  buffer overflow      |
@@ -362,11 +360,11 @@ cat << !
     |  15    -  Replace website images          -  img src=http://other |
     |  16    -  Replace website text            -  replace: worlds      |
     |                                                                   |
-    |   E    -  Exit/close megaR4id                                     |
+    |   E    -  Exit/close spiD3R                                       |
     ---------------------------------------------------------------------
 !
 
-sleep 1
+#sleep 1
 #echo -e ${white} Chose Your Option${RedF}: ${Reset};
 #echo -n "$PrompT"
 #read choice
