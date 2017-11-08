@@ -231,7 +231,7 @@ tr -d '\n' < $TORRENT/$spider.txt > $TORRENT/${spider}_import.txt
 sed -i 's/Fannounce/&\n/g' $TORRENT/${spider}_import.txt
 
 while read -r line ; do
-	title=$(cut -d"|" -f1 $line)
+	title=$(cut -d'|' -f1 $line)
 	link=$(cut -d"|" -f2 $line)
 #        title=$line
 #        tmp_title=${title/<title>/}
@@ -244,7 +244,7 @@ while read -r line ; do
         #Entfernen der Zeile rarbg
  #       sed -i '/^rar*/ d' $TORRENT/${spider}_title.txt
 	echo -e "Titel:${title}\n"
-	echo -e "Link:${link}\n"
+#	echo -e "Link:${link}\n"
 done < <(cat $TORRENT/$spider.txt)
 #done < <(grep title $TORRENT/$spider.txt)
 sleep 3
